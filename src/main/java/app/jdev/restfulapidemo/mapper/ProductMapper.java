@@ -1,16 +1,29 @@
 package app.jdev.restfulapidemo.mapper;
 
+import org.springframework.stereotype.Component;
+
 import app.jdev.restfulapidemo.entity.Product;
+import app.jdev.restfulapidemo.model.DTO;
 import app.jdev.restfulapidemo.model.ProductDTO;
 
-public class ProductMapper {
-    
-    public static Product map(ProductDTO productDTO) {
+@Component
+public class ProductMapper implements Mapper<Product, Long> {
+
+    @Override
+    public Product mapToEntity(DTO<Long> dto) {
+        ProductDTO productDTO = (ProductDTO) dto;
         Product product = new Product();
         product.setId(productDTO.id());
         product.setName(productDTO.name());
         product.setPrice(productDTO.price());
         return product;
+    }
+
+    @Override
+    public DTO<Long> mapToDTO(Product product) {
+        return new ProductDTO(product.getId(),
+                product.getName(),
+                product.getPrice());
     }
 
 }
