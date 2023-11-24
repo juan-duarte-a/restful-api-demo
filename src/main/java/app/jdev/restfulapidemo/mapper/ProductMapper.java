@@ -26,4 +26,12 @@ public class ProductMapper implements Mapper<Product, Long> {
                 product.getPrice());
     }
 
+    @Override
+    public Product updateAndMapToEntity(Long id, DTO<Long> dto) {
+        ProductDTO productDTO = (ProductDTO) dto;
+        Product product = new Product(productDTO.name(), productDTO.price());
+        product.setId(id);
+        return product;
+    }
+
 }

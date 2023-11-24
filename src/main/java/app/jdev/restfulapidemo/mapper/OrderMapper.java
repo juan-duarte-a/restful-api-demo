@@ -34,4 +34,12 @@ public class OrderMapper implements Mapper<Order, Long> {
                 (ClientDTO) clientMapper.mapToDTO(order.getClient()));
     }
 
+    @Override
+    public Order updateAndMapToEntity(Long id, DTO<Long> dto) {
+        OrderDTO orderDTO = (OrderDTO) dto;
+        Order order = new Order(orderDTO.date(), clientMapper.mapToEntity(orderDTO.client()));
+        order.setId(id);
+        return order;
+    }
+
 }

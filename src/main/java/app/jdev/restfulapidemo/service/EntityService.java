@@ -3,6 +3,10 @@ package app.jdev.restfulapidemo.service;
 import app.jdev.restfulapidemo.mapper.Mapper;
 import app.jdev.restfulapidemo.model.DTO;
 import app.jdev.restfulapidemo.repository.EntityRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.LinkedList;
 
 public abstract class EntityService<E, ID> {
     
@@ -14,12 +18,16 @@ public abstract class EntityService<E, ID> {
         this.mapper = mapper;
     }
 
-    public Iterable<E> findAll() {
-        return entityRepository.findAll();
+    public Iterable<DTO<ID>> findAll() {
+        Iterable<E> entityList = entityRepository.findAll();
+        LinkedList<DTO<ID>> dtoList = new LinkedList<>();
+        entityList.forEach(entity -> dtoList.add(mapper.mapToDTO(entity)));
+        return dtoList;
     }
 
-    public E findById(ID id) {
-        return entityRepository.findById(id).orElseThrow();
+    public DTO<ID> findById(ID id) {
+        E entity = entityRepository.findById(id).orElseThrow();
+        return mapper.mapToDTO(entity);
     }
 
     public DTO<ID> save(DTO<ID> entityDTO) {
@@ -27,13 +35,17 @@ public abstract class EntityService<E, ID> {
         return mapper.mapToDTO(entity);
     }
 
-    public DTO<ID> update(DTO<ID> entityDTO) {
-        findById(entityDTO.id());
-        return save(entityDTO);
+    public DTO<ID> update(ID id, DTO<ID> entityDTO) {
+        entityRepository.findById(id).orElseThrow();
+        E entity = mapper.updateAndMapToEntity(id, entityDTO);
+        entity = entityRepository.save(entity);
+        return mapper.mapToDTO(entity);
     }
 
-    public void delete(DTO<ID> entityDTO) {
-        E entity = findById(entityDTO.id());
-        entityRepository.delete(entity);
+    public void delete(ID id) {
+        if (!entityRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity not found");
+        }
+        entityRepository.deleteById(id);
     }
 }

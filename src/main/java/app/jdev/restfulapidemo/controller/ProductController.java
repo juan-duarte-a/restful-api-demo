@@ -1,15 +1,9 @@
 package app.jdev.restfulapidemo.controller;
 
+import app.jdev.restfulapidemo.model.DTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import app.jdev.restfulapidemo.entity.Product;
 import app.jdev.restfulapidemo.model.ProductDTO;
 import app.jdev.restfulapidemo.service.ProductService;
 
@@ -24,12 +18,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public Iterable<Product> findAllProducts() {
+    public Iterable<DTO<Long>> findAllProducts() {
         return productService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Product findProductById(@PathVariable Long id) {
+    public DTO<Long> findProductById(@PathVariable Long id) {
         return productService.findById(id);
     }
 
@@ -37,6 +31,16 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO newProduct(@RequestBody ProductDTO productDTO) {
         return (ProductDTO) productService.save(productDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        return (ProductDTO) productService.update(id, productDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.delete(id);
     }
 
 }

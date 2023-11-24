@@ -28,4 +28,12 @@ public class ClientMapper implements Mapper<Client, Long> {
                 client.getPhoneNumber());
     }
 
+    @Override
+    public Client updateAndMapToEntity(Long id, DTO<Long> dto) {
+        ClientDTO clientDTO = (ClientDTO) dto;
+        Client client = new Client(clientDTO.name(), clientDTO.phoneNumber(), clientDTO.email());
+        client.setId(id);
+        return client;
+    }
+
 }
