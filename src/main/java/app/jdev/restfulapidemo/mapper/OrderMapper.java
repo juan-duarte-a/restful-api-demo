@@ -11,19 +11,19 @@ import app.jdev.restfulapidemo.model.OrderDTO;
 public class OrderMapper implements Mapper<Order, Long> {
 
     private final ClientMapper clientMapper;
+    private final OrderProductMapper orderProductMapper;
 
-    public OrderMapper(ClientMapper clientMapper) {
+    public OrderMapper(ClientMapper clientMapper, OrderProductMapper orderProductMapper) {
         this.clientMapper = clientMapper;
+        this.orderProductMapper = orderProductMapper;
     }
 
     @Override
     public Order mapToEntity(DTO<Long> dto) {
         OrderDTO orderDTO = (OrderDTO) dto;
-        ClientMapper clientMapper = new ClientMapper();
-        Order order = new Order();
+        Order order = new Order(orderDTO.date(), clientMapper.mapToEntity(orderDTO.client()),
+                orderDTO.products().stream().map(orderProductMapper::mapToEntity).toList());
         order.setId(orderDTO.id());
-        order.setDate(orderDTO.date());
-        order.setClient(clientMapper.mapToEntity(orderDTO.client()));
         return order;
     }
 
@@ -31,13 +31,13 @@ public class OrderMapper implements Mapper<Order, Long> {
     public DTO<Long> mapToDTO(Order order) {
         return new OrderDTO(order.getId(),
                 order.getDate(),
-                (ClientDTO) clientMapper.mapToDTO(order.getClient()));
+                (ClientDTO) clientMapper.mapToDTO(order.getClient()),
+                order.getOrderProducts().stream().map(orderProductMapper::mapToDTO).toList());
     }
 
     @Override
     public Order updateAndMapToEntity(Long id, DTO<Long> dto) {
-        OrderDTO orderDTO = (OrderDTO) dto;
-        Order order = new Order(orderDTO.date(), clientMapper.mapToEntity(orderDTO.client()));
+        Order order = mapToEntity(dto);
         order.setId(id);
         return order;
     }

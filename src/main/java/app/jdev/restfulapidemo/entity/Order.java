@@ -1,15 +1,9 @@
 package app.jdev.restfulapidemo.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "'order'")
@@ -26,12 +20,20 @@ public class Order {
     @JoinColumn(nullable = false)
     private Client client;
 
-    public Order() {
-    }
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts;
+
+    public Order() { }
 
     public Order(LocalDate date, Client client) {
         this.date = date;
         this.client = client;
+    }
+
+    public Order(LocalDate date, Client client, List<OrderProduct> orderProducts) {
+        this.date = date;
+        this.client = client;
+        this.orderProducts = orderProducts;
     }
 
     public Long getId() {
@@ -58,9 +60,17 @@ public class Order {
         this.client = client;
     }
 
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
+    }
+
     @Override
     public String toString() {
-        return "Order [id=" + id + ", date=" + date + ", client=" + client + "]";
+        return "Order [id=" + id + ", date=" + date + ", client=" + client + ", products=" + orderProducts + "]";
     }
 
 }

@@ -12,11 +12,8 @@ public class ClientMapper implements Mapper<Client, Long> {
     @Override
     public Client mapToEntity(DTO<Long> dto) {
         ClientDTO clientDTO = (ClientDTO) dto;
-        Client client = new Client();
+        Client client = new Client(clientDTO.name(), clientDTO.email(), clientDTO.phoneNumber());
         client.setId(clientDTO.id());
-        client.setName(clientDTO.name());
-        client.setEmail(clientDTO.email());
-        client.setPhoneNumber(clientDTO.phoneNumber());
         return client;
     }
 
@@ -25,13 +22,12 @@ public class ClientMapper implements Mapper<Client, Long> {
         return new ClientDTO(client.getId(),
                 client.getName(),
                 client.getPhoneNumber(),
-                client.getPhoneNumber());
+                client.getEmail());
     }
 
     @Override
     public Client updateAndMapToEntity(Long id, DTO<Long> dto) {
-        ClientDTO clientDTO = (ClientDTO) dto;
-        Client client = new Client(clientDTO.name(), clientDTO.phoneNumber(), clientDTO.email());
+        Client client = mapToEntity(dto);
         client.setId(id);
         return client;
     }

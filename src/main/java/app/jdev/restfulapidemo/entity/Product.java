@@ -19,7 +19,7 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
-    public Product() {}
+    public Product() { }
 
     public Product(String name, double price) {
         this.name = name;

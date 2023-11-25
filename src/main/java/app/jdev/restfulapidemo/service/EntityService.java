@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.LinkedList;
 
 public abstract class EntityService<E, ID> {
-    
+
     private final EntityRepository<E, ID> entityRepository;
     private final Mapper<E, ID> mapper;
 
@@ -26,7 +26,8 @@ public abstract class EntityService<E, ID> {
     }
 
     public DTO<ID> findById(ID id) {
-        E entity = entityRepository.findById(id).orElseThrow();
+        E entity = entityRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity not found"));
         return mapper.mapToDTO(entity);
     }
 
@@ -36,7 +37,8 @@ public abstract class EntityService<E, ID> {
     }
 
     public DTO<ID> update(ID id, DTO<ID> entityDTO) {
-        entityRepository.findById(id).orElseThrow();
+        entityRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Entity not found"));
         E entity = mapper.updateAndMapToEntity(id, entityDTO);
         entity = entityRepository.save(entity);
         return mapper.mapToDTO(entity);

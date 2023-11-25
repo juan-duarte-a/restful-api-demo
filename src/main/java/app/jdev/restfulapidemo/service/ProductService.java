@@ -2,7 +2,6 @@ package app.jdev.restfulapidemo.service;
 
 import app.jdev.restfulapidemo.model.DTO;
 import app.jdev.restfulapidemo.model.ProductDTO;
-import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +14,12 @@ import org.springframework.web.server.ResponseStatusException;
 public class ProductService extends EntityService<Product, Long> {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
         super(productRepository, productMapper);
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
     }
 
     public boolean existsProductByName(String name) {
@@ -31,6 +32,10 @@ public class ProductService extends EntityService<Product, Long> {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "The entity already exists");
         }
         return super.save(dto);
+    }
+
+    public Product mapToProduct(DTO<Long> productDTO) {
+        return productMapper.mapToEntity(productDTO);
     }
 
 }

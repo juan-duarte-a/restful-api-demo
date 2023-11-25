@@ -29,13 +29,13 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO newProduct(@RequestBody ProductDTO productDTO) {
-        return (ProductDTO) productService.save(productDTO);
+    public DTO<Long> newProduct(@RequestBody ProductDTO productDTO) {
+        return productService.save(productDTO);
     }
 
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-        return (ProductDTO) productService.update(id, productDTO);
+    public DTO<Long> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        return productService.update(id, productDTO);
     }
 
     @DeleteMapping("/{id}")
