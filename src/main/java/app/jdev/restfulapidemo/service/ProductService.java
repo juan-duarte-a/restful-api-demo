@@ -29,7 +29,7 @@ public class ProductService extends EntityService<Product, Long> {
     @Override
     public DTO<Long> save(DTO<Long> dto) {
         if (existsProductByName(((ProductDTO) dto).name())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "The entity already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "The product already exists");
         }
         return super.save(dto);
     }

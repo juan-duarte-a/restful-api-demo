@@ -12,8 +12,8 @@ INSERT INTO product (name, price) VALUES ('Apple 2020 MacBook Air Laptop', 750.9
 INSERT INTO client (name, phone_number, email) VALUES ('John Doe', '+11 345 576 2345', 'john.doe@email.com');
 INSERT INTO client (name, phone_number, email) VALUES ('Karen Smith', '+43 782 1033 9117', 'karen321sm@orgmail.com');
 
-INSERT INTO "'order'" (date, client_id) VALUES ('2023-11-23', 1);
-INSERT INTO "'order'" (date, client_id) VALUES ('2023-10-24', 2);
+INSERT INTO "'order'" (date, client_id, total_price) VALUES ('2023-11-23', 1, 841);
+INSERT INTO "'order'" (date, client_id, total_price) VALUES ('2023-10-24', 2, 2362.53);
 
 INSERT INTO order_product (order_id, product_id, quantity) VALUES (1, 3, 1);
 INSERT INTO order_product (order_id, product_id, quantity) VALUES (1, 7, 2);

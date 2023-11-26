@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "'order'")
 public class Order {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +23,9 @@ public class Order {
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts;
 
+    @Column(nullable = false)
+    private double totalPrice;
+
     public Order() { }
 
     public Order(LocalDate date, Client client) {
@@ -30,10 +33,11 @@ public class Order {
         this.client = client;
     }
 
-    public Order(LocalDate date, Client client, List<OrderProduct> orderProducts) {
+    public Order(LocalDate date, Client client, List<OrderProduct> orderProducts, double totalPrice) {
         this.date = date;
         this.client = client;
         this.orderProducts = orderProducts;
+        this.totalPrice = totalPrice;
     }
 
     public Long getId() {
@@ -68,9 +72,18 @@ public class Order {
         this.orderProducts = orderProducts;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     @Override
     public String toString() {
-        return "Order [id=" + id + ", date=" + date + ", client=" + client + ", products=" + orderProducts + "]";
+        return "Order [id=" + id + ", date=" + date + ", client=" + client + ", products="
+                + orderProducts + ", totalPrice=" + totalPrice + "]";
     }
 
 }

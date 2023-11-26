@@ -11,7 +11,7 @@ public class OrderProductMapper implements Mapper<OrderProduct, Long> {
     @Override
     public OrderProduct mapToEntity(DTO<Long> dto) {
         OrderProductDTO orderProductDTO = (OrderProductDTO) dto;
-        OrderProduct orderProduct = new OrderProduct(orderProductDTO.order(),
+        var orderProduct = new OrderProduct(orderProductDTO.order(),
                 orderProductDTO.product(), orderProductDTO.quantity());
         orderProduct.setId(orderProductDTO.id());
         return orderProduct;

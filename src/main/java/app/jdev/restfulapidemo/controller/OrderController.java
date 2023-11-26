@@ -34,8 +34,13 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public DTO<Long> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
-        return orderService.update(id, orderDTO);
+    public DTO<Long> updateOrder(@PathVariable Long id, @RequestBody NewOrderDTO newOrderDTO) {
+        return orderService.update(id, newOrderDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.delete(id);
     }
 
 }

@@ -4,6 +4,7 @@ import app.jdev.restfulapidemo.mapper.Mapper;
 import app.jdev.restfulapidemo.model.DTO;
 import app.jdev.restfulapidemo.repository.EntityRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedList;
@@ -18,6 +19,7 @@ public abstract class EntityService<E, ID> {
         this.mapper = mapper;
     }
 
+    @Transactional(readOnly = true)
     public Iterable<DTO<ID>> findAll() {
         Iterable<E> entityList = entityRepository.findAll();
         LinkedList<DTO<ID>> dtoList = new LinkedList<>();

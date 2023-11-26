@@ -12,7 +12,7 @@ public class ClientMapper implements Mapper<Client, Long> {
     @Override
     public Client mapToEntity(DTO<Long> dto) {
         ClientDTO clientDTO = (ClientDTO) dto;
-        Client client = new Client(clientDTO.name(), clientDTO.email(), clientDTO.phoneNumber());
+        var client = new Client(clientDTO.name(), clientDTO.phoneNumber(), clientDTO.email());
         client.setId(clientDTO.id());
         return client;
     }

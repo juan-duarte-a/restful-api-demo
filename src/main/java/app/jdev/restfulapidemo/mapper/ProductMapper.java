@@ -12,7 +12,7 @@ public class ProductMapper implements Mapper<Product, Long> {
     @Override
     public Product mapToEntity(DTO<Long> dto) {
         ProductDTO productDTO = (ProductDTO) dto;
-        Product product = new Product(productDTO.name(), productDTO.price());
+        var product = new Product(productDTO.name(), productDTO.price());
         product.setId(productDTO.id());
         return product;
     }

@@ -21,8 +21,9 @@ public class OrderMapper implements Mapper<Order, Long> {
     @Override
     public Order mapToEntity(DTO<Long> dto) {
         OrderDTO orderDTO = (OrderDTO) dto;
-        Order order = new Order(orderDTO.date(), clientMapper.mapToEntity(orderDTO.client()),
-                orderDTO.products().stream().map(orderProductMapper::mapToEntity).toList());
+        var order = new Order(orderDTO.date(), clientMapper.mapToEntity(orderDTO.client()),
+                orderDTO.products().stream().map(orderProductMapper::mapToEntity).toList(),
+                orderDTO.totalPrice());
         order.setId(orderDTO.id());
         return order;
     }
@@ -32,7 +33,8 @@ public class OrderMapper implements Mapper<Order, Long> {
         return new OrderDTO(order.getId(),
                 order.getDate(),
                 (ClientDTO) clientMapper.mapToDTO(order.getClient()),
-                order.getOrderProducts().stream().map(orderProductMapper::mapToDTO).toList());
+                order.getOrderProducts().stream().map(orderProductMapper::mapToDTO).toList(),
+                order.getTotalPrice());
     }
 
     @Override

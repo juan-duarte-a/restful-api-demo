@@ -1,11 +1,15 @@
 package app.jdev.restfulapidemo.controller;
 
 import app.jdev.restfulapidemo.model.DTO;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import app.jdev.restfulapidemo.model.ProductDTO;
 import app.jdev.restfulapidemo.service.ProductService;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/products")
@@ -40,7 +44,13 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
-        productService.delete(id);
+        try {
+            productService.delete(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "There are orders with the product that are being eliminated. " +
+                            "Eliminate those orders first.");
+        }
     }
 
 }
