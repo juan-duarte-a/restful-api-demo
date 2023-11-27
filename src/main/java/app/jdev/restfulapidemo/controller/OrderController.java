@@ -1,10 +1,10 @@
 package app.jdev.restfulapidemo.controller;
 
-import app.jdev.restfulapidemo.model.DTO;
-import app.jdev.restfulapidemo.model.NewOrderDTO;
-import app.jdev.restfulapidemo.model.OrderDTO;
+import app.jdev.restfulapidemo.dto.DTO;
+import app.jdev.restfulapidemo.dto.NewOrderDTO;
 import app.jdev.restfulapidemo.service.OrderService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,12 +29,12 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DTO<Long> newOrder(@RequestBody NewOrderDTO newOrderDTO) {
+    public DTO<Long> newOrder(@Validated @RequestBody NewOrderDTO newOrderDTO) {
         return orderService.save(newOrderDTO);
     }
 
     @PutMapping("/{id}")
-    public DTO<Long> updateOrder(@PathVariable Long id, @RequestBody NewOrderDTO newOrderDTO) {
+    public DTO<Long> updateOrder(@PathVariable Long id, @Validated @RequestBody NewOrderDTO newOrderDTO) {
         return orderService.update(id, newOrderDTO);
     }
 

@@ -1,7 +1,7 @@
 package app.jdev.restfulapidemo.service;
 
 import app.jdev.restfulapidemo.mapper.Mapper;
-import app.jdev.restfulapidemo.model.DTO;
+import app.jdev.restfulapidemo.dto.DTO;
 import app.jdev.restfulapidemo.repository.EntityRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;

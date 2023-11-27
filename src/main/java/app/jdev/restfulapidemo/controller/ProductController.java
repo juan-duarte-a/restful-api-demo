@@ -1,15 +1,14 @@
 package app.jdev.restfulapidemo.controller;
 
-import app.jdev.restfulapidemo.model.DTO;
+import app.jdev.restfulapidemo.dto.DTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import app.jdev.restfulapidemo.model.ProductDTO;
+import app.jdev.restfulapidemo.dto.ProductDTO;
 import app.jdev.restfulapidemo.service.ProductService;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/products")
@@ -33,12 +32,12 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DTO<Long> newProduct(@RequestBody ProductDTO productDTO) {
+    public DTO<Long> newProduct(@Validated @RequestBody ProductDTO productDTO) {
         return productService.save(productDTO);
     }
 
     @PutMapping("/{id}")
-    public DTO<Long> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+    public DTO<Long> updateProduct(@PathVariable Long id, @Validated @RequestBody ProductDTO productDTO) {
         return productService.update(id, productDTO);
     }
 

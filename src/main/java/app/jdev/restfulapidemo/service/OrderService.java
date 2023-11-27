@@ -4,8 +4,8 @@ import app.jdev.restfulapidemo.entity.Client;
 import app.jdev.restfulapidemo.entity.OrderProduct;
 import app.jdev.restfulapidemo.entity.Product;
 import app.jdev.restfulapidemo.mapper.OrderMapper;
-import app.jdev.restfulapidemo.model.DTO;
-import app.jdev.restfulapidemo.model.NewOrderDTO;
+import app.jdev.restfulapidemo.dto.DTO;
+import app.jdev.restfulapidemo.dto.NewOrderDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

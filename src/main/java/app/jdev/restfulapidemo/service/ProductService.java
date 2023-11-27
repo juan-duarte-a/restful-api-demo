@@ -1,7 +1,7 @@
 package app.jdev.restfulapidemo.service;
 
-import app.jdev.restfulapidemo.model.DTO;
-import app.jdev.restfulapidemo.model.ProductDTO;
+import app.jdev.restfulapidemo.dto.DTO;
+import app.jdev.restfulapidemo.dto.ProductDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

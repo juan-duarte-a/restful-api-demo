@@ -1,4 +1,4 @@
-package app.jdev.restfulapidemo.model;
+package app.jdev.restfulapidemo.dto;
 
 public interface DTO<ID> {
     

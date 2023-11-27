@@ -1,6 +1,6 @@
 package app.jdev.restfulapidemo.mapper;
 
-import app.jdev.restfulapidemo.model.DTO;
+import app.jdev.restfulapidemo.dto.DTO;
 
 public interface Mapper<E, ID> {
 

@@ -1,8 +1,8 @@
 package app.jdev.restfulapidemo.mapper;
 
 import app.jdev.restfulapidemo.entity.OrderProduct;
-import app.jdev.restfulapidemo.model.DTO;
-import app.jdev.restfulapidemo.model.OrderProductDTO;
+import app.jdev.restfulapidemo.dto.DTO;
+import app.jdev.restfulapidemo.dto.OrderProductDTO;
 import org.springframework.stereotype.Component;
 
 @Component

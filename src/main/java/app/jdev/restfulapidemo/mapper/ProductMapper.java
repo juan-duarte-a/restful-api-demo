@@ -3,8 +3,8 @@ package app.jdev.restfulapidemo.mapper;
 import org.springframework.stereotype.Component;
 
 import app.jdev.restfulapidemo.entity.Product;
-import app.jdev.restfulapidemo.model.DTO;
-import app.jdev.restfulapidemo.model.ProductDTO;
+import app.jdev.restfulapidemo.dto.DTO;
+import app.jdev.restfulapidemo.dto.ProductDTO;
 
 @Component
 public class ProductMapper implements Mapper<Product, Long> {

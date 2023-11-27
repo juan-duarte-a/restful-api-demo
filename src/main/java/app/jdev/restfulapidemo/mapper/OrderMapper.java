@@ -3,9 +3,9 @@ package app.jdev.restfulapidemo.mapper;
 import org.springframework.stereotype.Component;
 
 import app.jdev.restfulapidemo.entity.Order;
-import app.jdev.restfulapidemo.model.ClientDTO;
-import app.jdev.restfulapidemo.model.DTO;
-import app.jdev.restfulapidemo.model.OrderDTO;
+import app.jdev.restfulapidemo.dto.ClientDTO;
+import app.jdev.restfulapidemo.dto.DTO;
+import app.jdev.restfulapidemo.dto.OrderDTO;
 
 @Component
 public class OrderMapper implements Mapper<Order, Long> {
