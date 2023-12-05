@@ -22,10 +22,6 @@ public class Client {
 
     public Client() { }
 
-    public Client(String name) {
-        this.name = name;
-    }
-
     public Client(String name, String phoneNumber, String email) {
         this.name = name;
         this.phoneNumber = phoneNumber;

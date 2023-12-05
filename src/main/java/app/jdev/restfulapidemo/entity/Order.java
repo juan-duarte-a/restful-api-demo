@@ -33,10 +33,10 @@ public class Order {
         this.client = client;
     }
 
-    public Order(LocalDate date, Client client, List<OrderProduct> orderProducts, double totalPrice) {
+    public Order(Long id, LocalDate date, Client client, double totalPrice) {
+        this.id = id;
         this.date = date;
         this.client = client;
-        this.orderProducts = orderProducts;
         this.totalPrice = totalPrice;
     }
 
