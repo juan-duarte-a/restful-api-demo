@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProductController.class)
@@ -81,6 +82,20 @@ public class ProductControllerTest {
         when(productService.findById(any(Long.class))).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         mockMvc.perform(get("/products/3")).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldCreateAndReturnAProductDTO() throws Exception {
+        DTO<Long> productDTO = new ProductDTO(5L, "A product", 50.33);
+        when(productService.save(any(ProductDTO.class))).thenReturn(productDTO);
+
+        mockMvc.perform(post("/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(5L))
+                .andExpect(jsonPath("$.name").value("A product"))
+                .andExpect(jsonPath("$.price").value(50.33));
     }
 
 }

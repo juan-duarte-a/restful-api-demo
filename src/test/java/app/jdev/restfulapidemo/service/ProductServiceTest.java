@@ -10,9 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +44,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    void shouldReturnAListOfProductDTO() {
+    void shouldReturnAListOfProductDTOs() {
         var products = new ArrayList<Product>();
         products.add(new Product(1L, "P1", 1.33));
         products.add(new Product(2L, "P2", 2.33));
@@ -54,12 +52,12 @@ public class ProductServiceTest {
 
         when(productRepository.findAll()).thenReturn(products);
 
-        List<DTO<Long>> expected = new ArrayList<>();
-        IntStream.range(0, 3).forEach(i ->
-            expected.add(new ProductDTO(
-                    products.get(i).getId(),
-                    products.get(i).getName(),
-                    products.get(i).getPrice()))
+        var expected = new ArrayList<DTO<Long>>();
+        products.forEach(product ->
+                expected.add(new ProductDTO(
+                        product.getId(),
+                        product.getName(),
+                        product.getPrice()))
         );
 
         var obtained = new ArrayList<DTO<Long>>();
@@ -73,7 +71,7 @@ public class ProductServiceTest {
         var product = new Product(3L, "A new product", 10.01);
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
-        var productDTO = new ProductDTO(3L, "A new product", 10.01);
+        var productDTO = new ProductDTO(product.getId(), product.getName(), product.getPrice());
         assertEquals(productDTO, productService.save(productDTO));
     }
 
